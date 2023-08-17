@@ -1,0 +1,33 @@
+name: "squealer action"
+description: "Runs squealer and outputs any failures"
+author: "owen@owenrumney.co.uk"
+
+inputs:
+  working_directory:
+    required: false
+    description: |
+      Directory to run the action on, from the repo root.
+      Default is . (root of the repository)
+    default: "."
+  version:
+    required: false
+    description: The version of squealer to use, defaults to latest
+    default: latest
+  format:
+    required: false
+    description: the format of the output
+    default: default
+  github_token:
+    description: |
+      GitHub token used for making authenticated requests to the GitHub API,
+      which helps avoid rate limiting
+    required: false
+outputs:
+  squealer-return-code:
+    description: "squealer command return code"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "git-pull-request"
+  color: "purple"
