@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
+ #set -xe
 
 if [ -z "${INPUT_GITHUB_TOKEN}" ] ; then
   echo "::notice title=GitHub API token::Consider setting a GITHUB_TOKEN to prevent GitHub api rate limits"
@@ -33,7 +33,7 @@ function get_release_assets() {
 function install_release() {
   repo="$1"
   version="$2"
-  binary="$3-linux-amd64"
+  binary="$3.linux.amd64"
   checksum="$4"
   release_assets="$(get_release_assets "${repo}" "${version}")"
 
@@ -50,6 +50,8 @@ if [ -n "${GITHUB_WORKSPACE}" ]; then
   cd "${GITHUB_WORKSPACE}" || exit
 fi
 
+echo "Scanning ${GITHUB_WORKSPACE}"
+
 FORMAT=${INPUT_FORMAT:-default}
 
-squealer --no-git --output-format="${FORMAT}" "${INPUT_WORKING_DIRECTORY}"
+squealer --no-git --output-format="${FORMAT}" .
