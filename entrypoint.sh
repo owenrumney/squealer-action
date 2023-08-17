@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
- #set -xe
+#set -xe
 
-if [ -z "${INPUT_GITHUB_TOKEN}" ] ; then
+if [ -z "${INPUT_GITHUB_TOKEN}" ]; then
   echo "::notice title=GitHub API token::Consider setting a GITHUB_TOKEN to prevent GitHub api rate limits"
 fi
 
@@ -42,6 +42,7 @@ function install_release() {
 
   grep "${binary}" "$3-checksums.txt" | sha256sum -c -
   install "${binary}" "/usr/local/bin/${3}"
+  rm -f "${binary}" "$3-checksums.txt"
 }
 
 install_release owenrumney/squealer "${SQUEALER_VERSION}" squealer squealer_checksums.txt
@@ -54,4 +55,4 @@ echo "Scanning ${GITHUB_WORKSPACE}"
 
 FORMAT=${INPUT_FORMAT:-default}
 
-squealer --no-git --output-format="${FORMAT}" .
+squealer --redacted --no-git --output-format="${FORMAT}"
